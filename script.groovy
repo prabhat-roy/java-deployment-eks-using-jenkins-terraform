@@ -5,7 +5,7 @@ def checkout() {
         git branch: 'main', credentialsId: 'github', url: "$GITHUB_URL"
 }
 def owasp() {
-    dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-check'
+    dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
     dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
 }
 def sonaranalysis() {
