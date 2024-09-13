@@ -5,7 +5,7 @@ resource "aws_security_group" "jenkins" {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["${format(jsondecode(data.http.ipinfo.body).ip)}/32"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
     from_port   = 22
