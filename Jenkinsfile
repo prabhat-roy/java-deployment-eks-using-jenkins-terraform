@@ -58,12 +58,6 @@ pipeline {
                 }
             }
         }
-        stage("Building Application") {
-            steps {
-                script {
-                    gv_script.buildapplication()
-                }
-            }
-        }
+        
     }
 }
