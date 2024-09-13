@@ -1,25 +1,25 @@
-resource "aws_instance" "jenkins" {
+resource "aws_instance" "sonarqube" {
   ami             = var.aws_ami
-  instance_type   = var.jenkins_instance_type
+  instance_type   = var.sonarqube_instance_type
   subnet_id       = aws_subnet.public_subnet[0].id
   key_name        = var.ssh_key
-  security_groups = ["${aws_security_group.jenkins.id}"]
+  security_groups = ["${aws_security_group.sonarqube.id}"]
   root_block_device {
     volume_size = "20"
     volume_type = "gp3"
     delete_on_termination = true
   }
 /*  
-#  user_data = file("jenkins.sh")
+#  user_data = file("sonarqube.sh")
   
   provisioner "file" {
-    source      = "jenkins.sh"
-    destination = "/tmp/jenkins.sh"
+    source      = "sonarqube.sh"
+    destination = "/tmp/sonarqube.sh"
   }
   provisioner "remote-exec" {
     inline = [
-      "chmod +x /tmp/jenkins.sh",
-      "/tmp/jenkins.sh",
+      "chmod +x /tmp/sonarqube.sh",
+      "/tmp/sonarqube.sh",
     ]
   }
   connection {
@@ -31,25 +31,25 @@ resource "aws_instance" "jenkins" {
 
 */
   tags = {
-    Name = "Jenkins-Server"
+    Name = "Sonarqube-Server"
   }
 }
 
-resource "null_resource" "jenkins" {
+resource "null_resource" "sonarqube" {
   connection {
     type = "ssh"
     user = "ubuntu"
     private_key = file(var.private_key_path)
-    host = aws_instance.jenkins.public_ip
+    host = aws_instance.sonarqube.public_ip
   }
   provisioner "file" {
-    source = "jenkins.sh"
-    destination = "/tmp/jenkins.sh"
+    source = "sonarqube.sh"
+    destination = "/tmp/sonarqube.sh"
   }
   provisioner "remote-exec" {
     inline = [ 
-      "chmod +x /tmp/jenkins.sh",
-      "/tmp/jenkins.sh",
+      "chmod +x /tmp/sonarqube.sh",
+      "/tmp/sonarqube.sh",
      ]
   }
 }

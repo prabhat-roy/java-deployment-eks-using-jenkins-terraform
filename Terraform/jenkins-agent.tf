@@ -5,6 +5,11 @@ resource "aws_instance" "jenkins-agent" {
   key_name        = var.ssh_key
   security_groups = ["${aws_security_group.jenkins-agent.id}"]
   iam_instance_profile = aws_iam_instance_profile.jenkins_admin_profile.name
+  root_block_device {
+    volume_size = "20"
+    volume_type = "gp3"
+    delete_on_termination = true
+  }
   tags = {
     Name = "Jenkins-Agent"
   }
