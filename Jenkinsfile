@@ -30,5 +30,12 @@ pipeline {
                 }
             }
         }
+        stage("OWASP FS Scan") {
+            steps {
+                script {
+                    gv_script.owasp()
+                }
+            }
+        }
     }
 }
