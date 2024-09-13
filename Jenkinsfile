@@ -44,5 +44,26 @@ pipeline {
                 }
             }
         }
+        stage("Trivy FS Scan") {
+            steps {
+                script {
+                    gv_script.trivyfs()
+                }
+            }
+        }
+        stage("Code Compile") {
+            steps {
+                script {
+                    gv_script.codecompile()
+                }
+            }
+        }
+        stage("Building Application") {
+            steps {
+                script {
+                    gv_script.buildapplication()
+                }
+            }
+        }
     }
 }
