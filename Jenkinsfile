@@ -74,13 +74,6 @@ pipeline {
                 }
             }
         }
-        stage("Docker Image") {
-            steps {
-                script {
-                    gv_script.docker()
-                }
-            }
-        }
         stage("Trivy Image Scan") {
             steps {
                 script {
