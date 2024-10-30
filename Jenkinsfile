@@ -3,6 +3,8 @@ pipeline {
     agent any
     environment {
          GITHUB_URL = "https://github.com/prabhat-roy/java-deployment-eks-using-jenkins-terraform.git"
+         IMAGE_NAME = "java-maven-image"
+         ECR = "873330726955.dkr.ecr.ap-south-2.amazonaws.com"
     }
     tools {
         jdk 'Java'
@@ -58,6 +60,68 @@ pipeline {
                 }
             }
         }
-        
+        stage("Build Application") {
+            steps {
+                script {
+                    gv_script.buildapplication()
+                }
+            }
+        }
+        stage("Docker Image") {
+            steps {
+                script {
+                    gv_script.docker()
+                }
+            }
+        }
+        stage("Docker Image") {
+            steps {
+                script {
+                    gv_script.docker()
+                }
+            }
+        }
+        stage("Trivy Image Scan") {
+            steps {
+                script {
+                    gv_script.trivyimage()
+                }
+            }
+        }
+        stage("Grype Image Scan") {
+            steps {
+                script {
+                    gv_script.grype()
+                }
+            }
+        }
+        stage("Syft Image Scan") {
+            steps {
+                script {
+                    gv_script.syft()
+                }
+            }
+        }
+        stage("Docker Scout Image Scan") {
+            steps {
+                script {
+                    gv_script.dockerscout()
+                }
+            }
+        }
+        stage("AWS ECR login and push") {
+            steps {
+                script {
+                    gv_script.ecr()
+                }
+            }
+        }
+        stage("Update kubeconfig") {
+            steps {
+                script {
+                    gv_script.kubeconfig()
+                }
+            }
+        }
     }
 }
