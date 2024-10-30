@@ -69,7 +69,11 @@ def ecr() {
 
 def kubeconfig() {
         sh '''
-                aws eks update-kubeconfig --region ap-south-2 --name EKS-Cluster
+                aws eks update-kubeconfig --region ${REGION} --name EKS-Cluster
+                kubectl get nodes
+                kubectl get pods -A
+                kubectl get ns
+                kubectl get svc -A
         '''
 }
 

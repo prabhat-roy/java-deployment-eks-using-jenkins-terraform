@@ -119,25 +119,7 @@ pipeline {
                 }
             }
         }
-        stage("Kubernetes deployment using Helm") {
-            steps {
-                script {
-                    gv_script.kubernetes()
-                }
-            }
-        }
-        stage("Remove docker images") {
-            steps {
-                script {
-                    gv_script.removedocker()
-                }
-            }
-        }        
+        
     }
-    post {
-        always {
-            sh "docker logout"
-            deleteDir()
-        }
-    }
+    
 }
