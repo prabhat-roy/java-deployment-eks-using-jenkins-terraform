@@ -3,8 +3,11 @@ pipeline {
     agent any
     environment {
          GITHUB_URL = "https://github.com/prabhat-roy/java-deployment-eks-using-jenkins-terraform.git"
-         IMAGE_NAME = "java-maven-image"
-         ECR = "873330726955.dkr.ecr.ap-south-2.amazonaws.com"
+         BRANCH = "main"
+         IMAGE_NAME = "java-maven-image"         
+         ACC_ID = "873330726955"
+         REGION = "ap-south-2"
+         ECR = "${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com"
     }
     tools {
         jdk 'Java'
@@ -122,6 +125,19 @@ pipeline {
                     gv_script.kubernetes()
                 }
             }
+        }
+        stage("Remove docker images") {
+            steps {
+                script {
+                    gv_script.removedocker()
+                }
+            }
+        }        
+    }
+    post {
+        always {
+            sh "docker logout"
+            deleteDir()
         }
     }
 }

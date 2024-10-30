@@ -2,7 +2,7 @@ def cleanup() {
         cleanWs()
 }
 def checkout() {
-        git branch: 'main', credentialsId: 'github', url: "$GITHUB_URL"
+        git branch: ${BRANCH}, credentialsId: 'github', url: "$GITHUB_URL"
 }
 def owasp() {
     dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
@@ -78,5 +78,9 @@ def kubernetes() {
         sh "kubectl get pods"
 }
 
-
+def removedocker() {
+                sh "docker rmi -f ${IMAGE_NAME}:${BUILD_NUMBER}"
+                sh "docker system prune --force --all"
+                sh "docker system prune --force --all --volumes"
+}
 return this

@@ -1,11 +1,15 @@
 sudo hostnamectl set-hostname jenkins-agent
-sudo apt-get update && apt-get upgrade -y
-sudo apt-get install git unzip curl python3 python3-pip -y
-wget https://github.com/aquasecurity/trivy/releases/download/v0.55.0/trivy_0.55.0_Linux-64bit.deb
-sudo dpkg -i trivy_0.55.0_Linux-64bit.deb
-curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
-curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sudo sh -s -- -b /usr/local/bin
-curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh
+sudo apt-get update && sudo apt-get upgrade -y
+cd /opt
+sudo apt-get install git wget unzip curl python3 python3-pip -y
+sudo apt-get install wget apt-transport-https gnupg lsb-release -y
+sudo wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+sudo apt-get update
+sudo apt-get install trivy -y
+sudo curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
+sudo curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sudo sh -s -- -b /usr/local/bin
+sudo curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh
 sudo apt-get -y install ansible
 sudo apt-get install openjdk-21-jdk -y
 sudo apt-get install docker.io -y
@@ -34,7 +38,9 @@ sudo rm -rf helm-v3.16.0-rc.1-linux-amd64.tar.gz
 sudo mv linux-amd64/helm /usr/local/bin
 sudo rm -rf linux-amd64
 helm version
-cd /opt
+sudo wget https://github.com/jeremylong/DependencyCheck/releases/download/v11.1.0/dependency-check-11.1.0-release.zip
+sudo unzip dependency-check-11.1.0-release.zip
+sudo rm -rf dependency-check-11.1.0-release.zip
 sudo wget https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
 sudo tar -xvzf apache-maven-3.9.9-bin.tar.gz
 sudo rm -rf apache-maven-3.9.9-bin.tar.gz
