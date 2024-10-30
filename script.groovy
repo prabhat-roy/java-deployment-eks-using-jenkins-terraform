@@ -2,7 +2,7 @@ def cleanup() {
         cleanWs()
 }
 def checkout() {
-        git branch: ${BRANCH}, credentialsId: 'github', url: "$GITHUB_URL"
+        git branch: "${BRANCH}", credentialsId: 'github', url: "$GITHUB_URL"
 }
 def owasp() {
     dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
