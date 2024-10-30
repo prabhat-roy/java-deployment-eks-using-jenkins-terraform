@@ -6,7 +6,7 @@ pipeline {
     }
     tools {
         jdk 'Java'
-        maven 'Maven3'
+        maven 'Maven'
     }
     stages {
         stage("Init") {
