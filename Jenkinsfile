@@ -116,5 +116,12 @@ pipeline {
                 }
             }
         }
+        stage("Kubernetes deployment using Helm") {
+            steps {
+                script {
+                    gv_script.kubernetes()
+                }
+            }
+        }
     }
 }
