@@ -61,9 +61,9 @@ def dockerscout() {
 
 def ecr() {
         sh '''
-                aws ecr get-login-password --region ap-south-2 | docker login --username AWS --password-stdin ${ECR}
-                docker tag ${IMAGE_NAME}:${BUILD_NUMBER} ${ECR}/${IMAGE_NAME}:{BUILD_NUMBER}
-                docker push ${ECR}/${IMAGE_NAME}:{BUILD_NUMBER}
+                aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ECR}
+                docker tag ${IMAGE_NAME}:${BUILD_NUMBER} ${ECR}/${IMAGE_NAME}:${BUILD_NUMBER}
+                docker push ${ECR}/${IMAGE_NAME}:${BUILD_NUMBER}
         '''
 }
 
