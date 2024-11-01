@@ -6,7 +6,7 @@ pipeline {
          BRANCH = "main"
          IMAGE_NAME = "java-maven-image"         
          ACC_ID = "873330726955"
-         REGION = "ap-south-2"
+         REGION = "us-east-1"
          ECR = "${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com"
     }
     tools {
