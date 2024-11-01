@@ -21,13 +21,7 @@ pipeline {
                 }
             }
         }
-        stage("Cleanup Workspace") {
-            steps {
-                script {
-                    gv_script.cleanup()
-                }
-            }
-        }
+      
         stage("Checkout from Git Repo") {
             steps {
                 script {
