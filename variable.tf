@@ -7,11 +7,11 @@ variable "aws_vpc_cidr" {
 variable "public_subnet_cidrs" {
 
 }
-
+/*
 variable "private_subnet_cidrs" {
 
 }
-
+*/
 variable "aws_region" {
 
 }
@@ -40,7 +40,7 @@ variable "cluster_name" {
   type = string
 }
 
-variable "instance_type" {
+variable "worker_node_instance_type" {
   type = string
 }
 

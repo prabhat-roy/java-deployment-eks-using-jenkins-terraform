@@ -1,10 +1,11 @@
 resource "aws_eks_node_group" "node_group" {
 
-  cluster_name         = aws_eks_cluster.cluster1.name
-  node_group_name      = "EKS-worker_node_group"
-  node_role_arn        = aws_iam_role.workernodes.arn
-  subnet_ids           = aws_subnet.private_subnet[*].id
-  instance_types       = [var.instance_type]
+  cluster_name    = aws_eks_cluster.cluster1.name
+  node_group_name = "EKS-worker_node_group"
+  node_role_arn   = aws_iam_role.workernodes.arn
+  subnet_ids      = aws_subnet.public_subnet[*].id
+  # subnet_ids           = aws_subnet.private_subnet[*].id
+  instance_types       = [var.worker_node_instance_type]
   ami_type             = var.ami_type
   capacity_type        = var.capacity
   force_update_version = true

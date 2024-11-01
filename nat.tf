@@ -1,4 +1,5 @@
 
+/*
 resource "aws_nat_gateway" "ngw" {
   count         = length(var.azs)
   allocation_id = element(aws_eip.nat-eip.*.id, count.index)
@@ -17,3 +18,4 @@ resource "aws_eip" "nat-eip" {
     Name = "EIP - ${count.index + 1}"
   }
 }
+*/

@@ -9,7 +9,7 @@ resource "aws_route_table" "public_rt" {
     Name = "Public Route Table"
   }
 }
-
+/*
 resource "aws_route_table" "private_rt" {
   vpc_id = aws_vpc.aws_vpc.id
   count  = length(var.private_subnet_cidrs)
@@ -22,3 +22,4 @@ resource "aws_route_table" "private_rt" {
     Name = "Private Route Table ${count.index + 1}"
   }
 }
+*/

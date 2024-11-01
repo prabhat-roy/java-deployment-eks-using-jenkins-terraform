@@ -1,10 +1,9 @@
 resource "aws_instance" "jenkins" {
-  ami                  = var.ami
-  instance_type        = var.jenkins_instance_type
-  subnet_id            = aws_subnet.public_subnet[0].id
-  key_name             = var.ssh_key
-  security_groups      = ["${aws_security_group.jenkins.id}"]
-  iam_instance_profile = aws_iam_instance_profile.jenkins_admin_profile.name
+  ami             = var.ami
+  instance_type   = var.jenkins_instance_type
+  subnet_id       = aws_subnet.public_subnet[0].id
+  key_name        = var.ssh_key
+  security_groups = ["${aws_security_group.jenkins.id}"]
   metadata_options {
     http_endpoint               = "enabled"
     http_tokens                 = "required"

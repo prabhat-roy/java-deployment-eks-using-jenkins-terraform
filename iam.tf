@@ -1,29 +1,44 @@
-resource "aws_iam_role" "jenkins_admin_role" {
-  name               = "jenkins_admin_role"
+resource "aws_iam_policy" "AmazonEKSAdminPolicy" {
+  name   = "AmazonEKSAdminPolicy"
+  policy = file("AmazonEKSAdminPolicy.json")
+}
+
+resource "aws_iam_role" "eks_admin" {
+  name               = "eks-admin"
   assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::873330726955:root"
+            },
+            "Action": "sts:AssumeRole",
+            "Condition": {}
+        }
+    ]
 }
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "jenkins_attachment" {
-  role       = aws_iam_role.jenkins_admin_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+resource "aws_iam_role_policy_attachment" "eks_admin_attachment" {
+  role       = aws_iam_role.eks_admin.name
+  policy_arn = aws_iam_policy.AmazonEKSAdminPolicy.arn
 }
 
-resource "aws_iam_instance_profile" "jenkins_admin_profile" {
-  name = "jenkins_admin_profile"
-  role = aws_iam_role.jenkins_admin_role.name
+resource "aws_iam_policy" "AmazonEKSAssumeEKSAdminPolicy" {
+  name   = "AmazonEKSAssumeEKSAdminPolicy"
+  policy = file("AmazonEKSAssumeEKSAdminPolicy.json")
+}
+
+resource "aws_iam_user" "jenkins-eks" {
+  name = "eks-jenkins"
+}
+
+resource "aws_iam_user_policy_attachment" "eks-jenkins-policy" {
+  user       = aws_iam_user.jenkins-eks.name
+  policy_arn = aws_iam_policy.AmazonEKSAssumeEKSAdminPolicy.arn
 }
 
 resource "aws_iam_role" "eks-iam-role" {
