@@ -29,7 +29,13 @@ pipeline {
                 }
             }
         }
-        
+        stage("OWASP FS Scan") {
+            steps {
+                script {
+                    gv_script.owasp()
+                }
+            }
+        }
         stage("SonarQube Analysis") {
             steps {
                 script {
@@ -100,14 +106,25 @@ pipeline {
                 }
             }
         }
-        stage("Update kubeconfig") {
+        stage("Kubernetes deployment using Helm") {
             steps {
                 script {
                     gv_script.kubeconfig()
                 }
             }
         }
-        
+        stage("Remove docker images") {
+            steps {
+                script {
+                    gv_script.removedocker()
+                }
+            }
+        } 
     }
-    
+    post {
+        always {
+            sh "docker logout"
+            deleteDir()
+        }
+    }
 }
