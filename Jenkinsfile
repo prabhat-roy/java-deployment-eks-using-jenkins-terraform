@@ -37,7 +37,13 @@ pipeline {
                 }
             }
         }
-        
+        stage("Trivy FS Scan") {
+            steps {
+                script {
+                    gv_script.trivyfs()
+                }
+            }
+        }
         stage("Code Compile") {
             steps {
                 script {
@@ -59,7 +65,13 @@ pipeline {
                 }
             }
         }
-        
+        stage("Trivy Image Scan") {
+            steps {
+                script {
+                    gv_script.trivyimage()
+                }
+            }
+        }
         stage("Grype Image Scan") {
             steps {
                 script {
