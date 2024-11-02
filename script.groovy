@@ -68,8 +68,7 @@ def ecr() {
 }
 
 def kubeconfig() {
-        sh '''
-                
+        sh '''  helm upgrade first-release --install java-maven --set image.tag=$BUILD_NUMBER             
                 kubectl get nodes
                 kubectl get pods -A
                 kubectl get ns
